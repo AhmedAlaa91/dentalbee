@@ -18,12 +18,12 @@ create_superuser() {
 
 cd beeBackend
 # Run migrations
-python manage.py makemigrations
+python manage.py makemigrations accounts
+python manage.py makemigrations appBackend
 python manage.py migrate
 
 
-create_superuser
-
+#create_superuser
 cd appBackend
 pytest
 
