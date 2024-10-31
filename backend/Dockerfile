@@ -7,9 +7,10 @@ RUN pip install -r requirements.txt
 # Copy the entire backend folder to /app
 COPY ./backend /app
 
-COPY ./backend/entrypoint.sh /app/entrypoint.sh
-RUN chmod +x /app/entrypoint.sh
 
+
+RUN chmod +x /app/entrypoint.sh
+RUN dos2unix /app/entrypoint.sh
 ENV DJANGO_SETTINGS_MODULE=beeBackend.settings
 
 ENTRYPOINT ["/app/entrypoint.sh"]

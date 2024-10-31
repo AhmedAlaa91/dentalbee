@@ -15,7 +15,7 @@ Prerequisites
 Installation
 
     Clone the repository.
-    Run docker-compose up from the root directory.
+    Run docker-compose build --no-cache from the root directory.
 
 Usage
 
