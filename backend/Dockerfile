@@ -10,7 +10,7 @@ COPY ./backend /app
 
 #RUN apt-get update && apt-get install -y dos2unix && dos2unix /app/entrypoint.sh
 
-RUN chmod +x /app/entrypoint.sh
+RUN chmod +x /app/entrypoint_back.sh
 
 ENV DJANGO_SETTINGS_MODULE=beeBackend.settings
 
