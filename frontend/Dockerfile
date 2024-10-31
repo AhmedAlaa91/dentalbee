@@ -8,4 +8,4 @@ COPY ./frontend/appfrontend /app
 
 
 
-ENTRYPOINT ["/app/entrypoint.sh"]
+ENTRYPOINT ["/app/entrypoint_front.sh"]
