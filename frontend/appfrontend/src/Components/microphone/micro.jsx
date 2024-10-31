@@ -62,23 +62,32 @@ function AudioRecorder() {
         if (audioRef.current) {
             setIsReplaying(true);
             audioRef.current.currentTime = 0;
-            audioRef.current.play();
             setTimer(duration); // Set countdown starting point
-
-            // Countdown timer for replay
-            timerRef.current = setInterval(() => {
-                setTimer(prev => {
-                    if (prev <= 1) {
-                        clearInterval(timerRef.current);
-                        setIsReplaying(false);
-                        return 0;
-                    }
-                    return prev - 1;
+    
+            try {
+                audioRef.current.play().then(() => {
+                    // Countdown timer for replay
+                    timerRef.current = setInterval(() => {
+                        setTimer((prev) => {
+                            if (prev <= 1) {
+                                clearInterval(timerRef.current);
+                                setIsReplaying(false);
+                                return 0;
+                            }
+                            return prev - 1;
+                        });
+                    }, 1000);
                 });
-            }, 1000);
+            } catch (error) {
+                console.error("Replay audio error:", error);
+            }
         }
+        console.log("Audio Blob size:", audioBlob.size);
+        console.log(URL.createObjectURL(audioBlob));
+
     };
 
+  
     const [description, setDescription] = useState(recordingData ? recordingData.description : ''); 
 
     const handleInputChangeDescription = (event) => {
@@ -189,10 +198,11 @@ function AudioRecorder() {
             </div>
             {audioBlob && (
                 <>
-                    <button className='actionbutton' onClick={replayRecording} style={{ marginTop: '10px' }}>Replay</button>
+                    {/* <button className='actionbutton' onClick={replayRecording} style={{ marginTop: '10px' }}>Replay</button> */}
                     <button className='actionbutton' onClick={sendAudioToAPI} style={{ marginTop: '10px' }}>Save</button>
                     {/* Audio element for replaying the recording */}
-                    <audio ref={audioRef} src={URL.createObjectURL(audioBlob)} onEnded={() => setIsReplaying(false)} />
+                    {/* <audio ref={audioRef} src={URL.createObjectURL(audioBlob)}  muted={false} onEnded={() => setIsReplaying(false)} /> */}
+                    <audio controls ref={audioRef} src={URL.createObjectURL(audioBlob)}  onEnded={() => setIsReplaying(false)} />
                 </>
             )}
         </div>
